@@ -1,5 +1,12 @@
 # Changelog
 
+## v2.1.2
+
+- Keep staged Source key material outside the live `keys/` store. Older signers cannot discover or enable staged keys by ignoring import metadata.
+- Persist the Source fence before materializing any live key. Activation resumes through a forward-only `activating` journal, verifies every exact original record, then opens the complete set with the final active transition.
+- Preserve foreign live keys created during a signer downgrade; activation rejects conflicts and abort removes only its staged private records.
+- Preserve already-active previous receivers. Previous staged receivers must be aborted and prepared again before activation. The encrypted bundle format and ordinary signing API remain unchanged.
+
 ## v2.1.1
 
 - Add privileged age-encrypted transfer of selected managed custody keys into an existing Vault mount, preserving exact legacy/current records, policies, IDs, and timestamps.

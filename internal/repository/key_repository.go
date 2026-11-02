@@ -67,7 +67,11 @@ func (r *VaultKeyRepository) PutKey(ctx context.Context, key domain.Key) error {
 }
 
 func (r *VaultKeyRepository) GetKey(ctx context.Context, keyID string) (*domain.Key, error) {
-	entry, err := r.storage.Get(ctx, keyPath(keyID))
+	location, err := r.location(ctx, keyID)
+	if err != nil {
+		return nil, err
+	}
+	entry, err := r.storage.Get(ctx, location.path)
 	if err != nil {
 		return nil, fmt.Errorf("read key %q: %w", keyID, err)
 	}
@@ -82,11 +86,7 @@ func (r *VaultKeyRepository) GetKey(ctx context.Context, keyID string) (*domain.
 	if err != nil {
 		return nil, err
 	}
-	active, err := r.importActive(ctx, keyID)
-	if err != nil {
-		return nil, err
-	}
-	key.Active = key.Active && active
+	key.Active = key.Active && location.active
 	return &key, nil
 }
 
@@ -94,6 +94,31 @@ func (r *VaultKeyRepository) ListKeyIDs(ctx context.Context) ([]string, error) {
 	keys, err := r.listKeyIDs(ctx, keyPrefix, "")
 	if err != nil {
 		return nil, fmt.Errorf("list keys: %w", err)
+	}
+	markers, err := r.listKeyIDs(ctx, importPrefix+"keys/", "")
+	if err != nil {
+		return nil, err
+	}
+	seen := make(map[string]bool, len(keys)+len(markers))
+	for _, id := range keys {
+		seen[id] = true
+	}
+	for _, id := range markers {
+		if seen[id] {
+			continue
+		}
+		location, err := r.location(ctx, id)
+		if err != nil {
+			return nil, err
+		}
+		entry, err := r.storage.Get(ctx, location.path)
+		if err != nil {
+			return nil, err
+		}
+		if entry != nil {
+			keys = append(keys, id)
+			seen[id] = true
+		}
 	}
 	sort.Strings(keys)
 	return keys, nil

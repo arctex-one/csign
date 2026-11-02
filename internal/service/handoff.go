@@ -97,7 +97,7 @@ func (s *HandoffService) Prepare(ctx context.Context, selection v1.CustodySelect
 	if err != nil {
 		return v1.CustodyReceipt{}, err
 	}
-	state := &repository.ImportState{Selection: selection, Phase: "prepared", Recipient: repository.WrappingIdentity{Public: identity.Recipient().String(), Private: identity.String()}}
+	state := &repository.ImportState{Format: repository.ImportFormat, Selection: selection, Phase: "prepared", Recipient: repository.WrappingIdentity{Public: identity.Recipient().String(), Private: identity.String()}}
 	if err := s.repo.SaveImport(ctx, state); err != nil {
 		return v1.CustodyReceipt{}, err
 	}
@@ -160,6 +160,12 @@ func (s *HandoffService) Import(ctx context.Context, req v1.CustodyImportRequest
 	}
 	proof := repository.BundleProof{Digest: req.Digest, Cipher: repository.RecordHash(req.Ciphertext)}
 	if state.Phase != "prepared" && state.Bundle != proof {
+		return v1.CustodyReceipt{}, transferConflict()
+	}
+	if state.Phase == "prepared" {
+		state.Format = repository.ImportFormat
+	}
+	if state.Phase != "active" && state.Format != repository.ImportFormat {
 		return v1.CustodyReceipt{}, transferConflict()
 	}
 	switch state.Phase {
@@ -265,15 +271,29 @@ func (s *HandoffService) Activate(ctx context.Context, req v1.CustodyActivation)
 		}
 		return receipt(state), nil
 	}
-	if state.Phase != "staged" {
+	if state.Phase != "staged" && state.Phase != "activating" {
+		return v1.CustodyReceipt{}, transferConflict()
+	}
+	if state.Phase == "activating" && state.Fence != req.Fence {
 		return v1.CustodyReceipt{}, transferConflict()
 	}
 	if err := s.repo.VerifyImport(ctx, state); err != nil {
 		return v1.CustodyReceipt{}, err
 	}
-	// One persisted phase transition opens the complete verified set atomically.
+	if state.Phase == "staged" {
+		// This durable attestation precedes the first write to the live key store.
+		// Activation is now forward-only: retain the Source fence and resume here.
+		state.Phase = "activating"
+		state.Fence = req.Fence
+		if err := s.repo.SaveImport(ctx, state); err != nil {
+			return v1.CustodyReceipt{}, err
+		}
+	}
+	if err := s.repo.MaterializeImport(ctx, state); err != nil {
+		return v1.CustodyReceipt{}, err
+	}
+	// One final phase transition opens the complete verified set in this backend.
 	state.Phase = "active"
-	state.Fence = req.Fence
 	if err := s.repo.SaveImport(ctx, state); err != nil {
 		return v1.CustodyReceipt{}, err
 	}
@@ -284,7 +304,7 @@ func (s *HandoffService) Abort(ctx context.Context, req v1.CustodyReference) (v1
 	if err != nil {
 		return v1.CustodyReceipt{}, err
 	}
-	if state.Phase == "active" {
+	if state.Phase == "active" || state.Phase == "activating" {
 		return v1.CustodyReceipt{}, transferConflict()
 	}
 	if state.Phase == "aborted" {

@@ -66,7 +66,11 @@ func TestHandoffPreservesSelectedCustodyAndRequiresActivation(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, "staged", result.Phase)
 	for id, raw := range map[string][]byte{"tenant/a": originalA, "tenant/b": originalB, "existing": unrelated} {
-		stored, err := target.Get(t.Context(), "keys/"+id)
+		path := "keys/" + id
+		if id != "existing" {
+			path = "custody-imports/records/" + req.TransferID + "/" + id
+		}
+		stored, err := target.Get(t.Context(), path)
 		require.NoError(t, err)
 		require.Equal(t, raw, stored.Value)
 		key, err := handoffRepo(target).GetKey(t.Context(), id)
@@ -303,7 +307,7 @@ func TestHandoffFailClosedOnLostGateAndChangedReadback(t *testing.T) {
 	receiver, req := handoffExport(t, source, target)
 	_, err := receiver.Import(t.Context(), req)
 	require.NoError(t, err)
-	record, err := target.Get(t.Context(), "keys/tenant/a")
+	record, err := target.Get(t.Context(), "custody-imports/records/"+req.TransferID+"/tenant/a")
 	require.NoError(t, err)
 	original := bytes.Clone(record.Value)
 	record.Value = append(record.Value, ' ')
@@ -359,7 +363,7 @@ func TestHandoffEd25519RecordRemainsExact(t *testing.T) {
 	require.NoError(t, err)
 	original, err := source.Get(t.Context(), "keys/ed25519")
 	require.NoError(t, err)
-	stored, err := target.Get(t.Context(), "keys/ed25519")
+	stored, err := target.Get(t.Context(), "custody-imports/records/"+selection.TransferID+"/ed25519")
 	require.NoError(t, err)
 	require.Equal(t, original.Value, stored.Value)
 }

@@ -116,7 +116,7 @@ This first runs `make verify`. If tests or golangci-lint fail, no release artifa
 ### Publish a release
 
 ```bash
-VERSION=v2.1.1 make publish-release
+VERSION=v2.1.2 make publish-release
 ```
 
 This is the supported release path. It requires a clean `main` worktree, verifies the changelog entry, runs the gated artifact build, creates and pushes the annotated tag, and lets the GitHub Actions release workflow publish the GitHub release. Before publishing, the workflow resolves the exact tagged module through `proxy.golang.org` into a temporary consumer outside the checkout with a fresh module cache, workspace disabled, and no replacement directives. It builds both the public Go client and the Vault plugin, then runs the same repository verification gate again before uploading release assets. A failure prevents GitHub release publication; the pushed tag is retained and must never be moved.
@@ -126,7 +126,7 @@ The requested `VERSION` must match `internal/version/version.go`; mismatches are
 To repeat the external-consumer check for an already pushed stable tag:
 
 ```bash
-VERSION=v2.1.1 make module-release-check
+VERSION=v2.1.2 make module-release-check
 ```
 
 This check needs network access and does not use local source replacements. Repository-local builds alone do not verify Go module packaging.
@@ -345,7 +345,7 @@ The client is organized by capability through `Keys`, `Signing`, and `Payloads`.
 Install a stable v2 release in your consumer module:
 
 ```bash
-go get github.com/lazysteff/csign/v2@v2.1.1
+go get github.com/lazysteff/csign/v2@v2.1.2
 go build github.com/lazysteff/csign/v2/cmd/chain-signer-plugin
 ```
 
@@ -506,25 +506,33 @@ from application identities. Vault's audit log applies to these requests.
    are preserved. External PKCS#11 handles are rejected. Existing keys are never
    overwritten, even if their ID or bytes match. Unselected keys, KV secrets,
    tokens, auth state, and other Vault mounts are excluded.
-4. The imported set is **staged and disabled**. Ordinary status/policy updates
-   cannot enable it. Check `v1/custody/status` with `transfer_id`. Replaying the
+4. The imported set is **staged and disabled** outside the live key store.
+   Ordinary status/policy updates cannot enable it, and an older signer cannot
+   discover its private material through the normal key API. Check `v1/custody/status` with `transfer_id`. Replaying the
    identical import resumes interrupted writes or returns its receipt. Another
    payload cannot replace it. The receiver wrapping identity is discarded once
    staging succeeds; the original ciphertext remains replayable by its digest.
 5. Establish and verify the external Source execution-owner fence, final
    checkpoint, application adoption, and financial reconciliation first. Only
    then POST `v1/custody/activate` with `transfer_id`, `digest`, and `fence` (the
-   lowercase SHA-256 digest of the operator's handover evidence). One durable
-   state transition enables the verified set with its original active flags.
+   lowercase SHA-256 digest of the operator's handover evidence). Activation
+   first persists this fence, then publishes exact original records to the live
+   key store through a resumable `activating` phase. The final durable active
+   transition opens the complete verified set with its original active flags.
    The plugin records this attestation; it cannot independently verify an
    external scheduler fence or financial opening. Possession of a digest does
    not prove those operational prerequisites.
 
-Before activation, `v1/custody/abort` with `transfer_id` removes only this
+Before activation begins, `v1/custody/abort` with `transfer_id` removes only this
 transfer's unchanged staged records and erases its wrapping identity. Interrupted
-aborts can resume. Activated transfers cannot be aborted or overwritten; normal
+aborts can resume. Once `activating` is persisted, keep Source fenced and resume
+activation with the same digest/fence; abort is prohibited because live keys may
+already have been published. Keep target application admission closed until the
+receipt is `active`. Activated transfers cannot be aborted or overwritten; normal
 key-management operations remain available after activation. Lost or corrupt
-receiver state fails closed while its key markers remain present. Restore the complete mount state, including
+receiver state fails closed while its key markers remain present. Receivers
+staged by v2.1.1 must be aborted and prepared again on v2.1.2; already-active
+receivers retain their normal key-management behavior. Restore the complete mount state, including
 `custody-imports/`, when recovering a mount; copying `keys/` alone bypasses its
 staging metadata and is unsupported.
 

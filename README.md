@@ -482,3 +482,61 @@ If you want to help:
 - run `make fmt`, `make build`, and `make verify` before opening a PR
 
 Useful areas for contribution include additional typed transaction support, stronger policy controls, external signer integrations, deployment examples, and documentation improvements.
+
+## Encrypted custody handover into an existing Vault
+
+The privileged `v1/custody/*` routes transfer only an explicit sorted set of
+managed signing key records between CSign mounts. No whole-Vault restore is
+needed. They require Vault `sudo` in addition to `update` capability; ordinary
+signing or key-management tokens cannot invoke them. Keep this capability away
+from application identities. Vault's audit log applies to these requests.
+
+1. On the receiving mount, POST `v1/custody/prepare` with `transfer_id`,
+   `checkpoint` (a lowercase SHA-256 evidence digest), and sorted unique
+   `key_ids`. The receiver generates an age X25519 identity inside its Vault
+   storage and returns only the public `recipient` and a receipt.
+2. On Source, POST `v1/custody/export` with `selection` containing those same
+   three fields and the public `recipient`. Retain the returned `digest` with
+   the trusted checkpoint evidence. The response contains base64 `ciphertext`,
+   its plaintext bundle digest, and count; private material is never returned
+   in plaintext. Export does not change or disable Source keys.
+3. On the receiver, POST `v1/custody/import` with `transfer_id`, the exported
+   `ciphertext`, and the independently retained `digest`. Exact raw records,
+   including IDs, key material, timestamps, policies, and original active flags,
+   are preserved. External PKCS#11 handles are rejected. Existing keys are never
+   overwritten, even if their ID or bytes match. Unselected keys, KV secrets,
+   tokens, auth state, and other Vault mounts are excluded.
+4. The imported set is **staged and disabled**. Ordinary status/policy updates
+   cannot enable it. Check `v1/custody/status` with `transfer_id`. Replaying the
+   identical import resumes interrupted writes or returns its receipt. Another
+   payload cannot replace it. The receiver wrapping identity is discarded once
+   staging succeeds; the original ciphertext remains replayable by its digest.
+5. Establish and verify the external Source execution-owner fence, final
+   checkpoint, application adoption, and financial reconciliation first. Only
+   then POST `v1/custody/activate` with `transfer_id`, `digest`, and `fence` (the
+   lowercase SHA-256 digest of the operator's handover evidence). One durable
+   state transition enables the verified set with its original active flags.
+   The plugin records this attestation; it cannot independently verify an
+   external scheduler fence or financial opening. Possession of a digest does
+   not prove those operational prerequisites.
+
+Before activation, `v1/custody/abort` with `transfer_id` removes only this
+transfer's unchanged staged records and erases its wrapping identity. Interrupted
+aborts can resume. Activated transfers cannot be aborted or overwritten; normal
+key-management operations remain available after activation. Lost or corrupt
+receiver state fails closed while its key markers remain present. Restore the complete mount state, including
+`custody-imports/`, when recovering a mount; copying `keys/` alone bypasses its
+staging metadata and is unsupported.
+
+The version-1 transfer protocol accepts at most 1,024 keys, 256 bytes per key ID,
+and an 8 MiB plaintext bundle. Transfer IDs contain 1–64 ASCII letters, digits,
+underscores, or hyphens. Batches use disjoint key IDs. There is no cross-batch
+atomic activation: keep target application admission closed until every batch
+and the complete handover have been verified. A Source export is a consistent
+in-process read of the selected records; it is not itself a Source execution
+fence. For a live migration take the final export only after Source is fenced,
+or export from a trusted offline checkpoint.
+
+See [local integration acceptance](tests/integration/README.md). This feature
+changes no signing request, policy, or key record format. New administrative
+routes appear in version discovery.

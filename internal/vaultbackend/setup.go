@@ -2,26 +2,28 @@ package vaultbackend
 
 import (
 	"context"
+	"sync"
 	"time"
 
+	"github.com/hashicorp/vault/sdk/framework"
+	"github.com/hashicorp/vault/sdk/logical"
 	"github.com/lazysteff/csign/v2/internal/custody"
 	"github.com/lazysteff/csign/v2/internal/policy"
 	"github.com/lazysteff/csign/v2/internal/repository"
 	"github.com/lazysteff/csign/v2/internal/service"
 	"github.com/lazysteff/csign/v2/internal/signingops"
-	"github.com/hashicorp/vault/sdk/framework"
-	"github.com/hashicorp/vault/sdk/logical"
 )
 
 type Backend struct {
 	*framework.Backend
-	policies policy.Evaluator
-	custody  custody.Resolver
-	registry *service.Registry
-	catalog  *signingops.Catalog
-	routes   []pathRegistration
-	now      func() time.Time
-	recovery *service.RecoveryService
+	custodyLock sync.RWMutex
+	policies    policy.Evaluator
+	custody     custody.Resolver
+	registry    *service.Registry
+	catalog     *signingops.Catalog
+	routes      []pathRegistration
+	now         func() time.Time
+	recovery    *service.RecoveryService
 }
 
 func New(resolver custody.ExternalResolver) *Backend {
@@ -60,9 +62,10 @@ func newBackendWithCatalog(resolver custody.ExternalResolver, catalog *signingop
 		return nil, err
 	}
 	b.Backend = &framework.Backend{
-		Help:        "Chain-Signer is an operation-authorized signing backend with typed and opaque protocol operations.",
-		BackendType: logical.TypeLogical,
-		Paths:       registeredPaths(b.routes),
+		Help:         "Chain-Signer is an operation-authorized signing backend with typed and opaque protocol operations.",
+		BackendType:  logical.TypeLogical,
+		Paths:        registeredPaths(b.routes),
+		PathsSpecial: &logical.Paths{Root: []string{"v1/custody/*"}},
 	}
 	return b, nil
 }

@@ -7,14 +7,15 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/hashicorp/vault/sdk/logical"
 	"github.com/lazysteff/csign/v2/internal/chain"
 	"github.com/lazysteff/csign/v2/internal/custody"
 	"github.com/lazysteff/csign/v2/internal/domain"
 	enc "github.com/lazysteff/csign/v2/internal/encoding"
+	"github.com/lazysteff/csign/v2/internal/faults"
 	"github.com/lazysteff/csign/v2/internal/keyid"
 	"github.com/lazysteff/csign/v2/internal/policy"
 	"github.com/lazysteff/csign/v2/internal/signingops"
-	"github.com/hashicorp/vault/sdk/logical"
 )
 
 const keyPrefix = "keys/"
@@ -40,10 +41,18 @@ func NewVaultKeyRepository(storage logical.Storage, catalog *signingops.Catalog)
 }
 
 func (r *VaultKeyRepository) PutKey(ctx context.Context, key domain.Key) error {
+	active, err := r.importActive(ctx, key.ID)
+	if err != nil {
+		return err
+	}
+	if !active {
+		return faults.New(faults.Conflict, "staged custody key cannot be changed")
+	}
+
 	if err := policy.ValidateStoredPolicy(r.catalog, key.Policy); err != nil {
 		return fmt.Errorf("validate key %q policy: %w", key.ID, err)
 	}
-	key, err := r.normalize(key, key.ID)
+	key, err = r.normalize(key, key.ID)
 	if err != nil {
 		return err
 	}
@@ -73,6 +82,11 @@ func (r *VaultKeyRepository) GetKey(ctx context.Context, keyID string) (*domain.
 	if err != nil {
 		return nil, err
 	}
+	active, err := r.importActive(ctx, keyID)
+	if err != nil {
+		return nil, err
+	}
+	key.Active = key.Active && active
 	return &key, nil
 }
 

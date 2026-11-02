@@ -4,9 +4,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/lazysteff/csign/v2/internal/routes"
 	"github.com/hashicorp/vault/sdk/framework"
 	"github.com/hashicorp/vault/sdk/logical"
+	"github.com/lazysteff/csign/v2/internal/routes"
 	"github.com/stretchr/testify/require"
 )
 
@@ -14,8 +14,14 @@ func TestBackendRoutesAndVerbsStayPinned(t *testing.T) {
 	backend := New(nil)
 
 	expected := map[string][]logical.Operation{
-		routes.Version + `/?`: {logical.ReadOperation},
-		routes.Keys + `/?`:    {logical.UpdateOperation, logical.ListOperation},
+		"v1/custody/prepare/?":  {logical.UpdateOperation},
+		"v1/custody/export/?":   {logical.UpdateOperation},
+		"v1/custody/import/?":   {logical.UpdateOperation},
+		"v1/custody/activate/?": {logical.UpdateOperation},
+		"v1/custody/abort/?":    {logical.UpdateOperation},
+		"v1/custody/status/?":   {logical.UpdateOperation},
+		routes.Version + `/?`:   {logical.ReadOperation},
+		routes.Keys + `/?`:      {logical.UpdateOperation, logical.ListOperation},
 		routes.KeyStatusRoot + `/` + framework.MatchAllRegex("key_id"): {logical.UpdateOperation},
 		routes.KeyPolicyRoot + `/` + framework.MatchAllRegex("key_id"): {logical.UpdateOperation},
 		routes.Keys + `/` + framework.MatchAllRegex("key_id"):          {logical.ReadOperation},

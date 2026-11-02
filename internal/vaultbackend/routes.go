@@ -3,9 +3,9 @@ package vaultbackend
 import (
 	"sort"
 
-	"github.com/lazysteff/csign/v2/internal/routes"
 	"github.com/hashicorp/vault/sdk/framework"
 	"github.com/hashicorp/vault/sdk/logical"
+	"github.com/lazysteff/csign/v2/internal/routes"
 )
 
 type pathRegistration struct {
@@ -144,6 +144,7 @@ func (b *Backend) routeRegistrations() []pathRegistration {
 		})
 	}
 
+	registrations = append(registrations, b.custodyRoutes()...)
 	return registrations
 }
 

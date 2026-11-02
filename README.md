@@ -116,7 +116,7 @@ This first runs `make verify`. If tests or golangci-lint fail, no release artifa
 ### Publish a release
 
 ```bash
-VERSION=v2.0.1 make publish-release
+VERSION=v2.1.1 make publish-release
 ```
 
 This is the supported release path. It requires a clean `main` worktree, verifies the changelog entry, runs the gated artifact build, creates and pushes the annotated tag, and lets the GitHub Actions release workflow publish the GitHub release. Before publishing, the workflow resolves the exact tagged module through `proxy.golang.org` into a temporary consumer outside the checkout with a fresh module cache, workspace disabled, and no replacement directives. It builds both the public Go client and the Vault plugin, then runs the same repository verification gate again before uploading release assets. A failure prevents GitHub release publication; the pushed tag is retained and must never be moved.
@@ -126,7 +126,7 @@ The requested `VERSION` must match `internal/version/version.go`; mismatches are
 To repeat the external-consumer check for an already pushed stable tag:
 
 ```bash
-VERSION=v2.0.1 make module-release-check
+VERSION=v2.1.1 make module-release-check
 ```
 
 This check needs network access and does not use local source replacements. Repository-local builds alone do not verify Go module packaging.
@@ -345,7 +345,7 @@ The client is organized by capability through `Keys`, `Signing`, and `Payloads`.
 Install a stable v2 release in your consumer module:
 
 ```bash
-go get github.com/lazysteff/csign/v2@v2.0.1
+go get github.com/lazysteff/csign/v2@v2.1.1
 go build github.com/lazysteff/csign/v2/cmd/chain-signer-plugin
 ```
 

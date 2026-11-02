@@ -1,5 +1,13 @@
 # Changelog
 
+## v2.1.1
+
+- Add privileged age-encrypted transfer of selected managed custody keys into an existing Vault mount, preserving exact legacy/current records, policies, IDs, and timestamps.
+- Stage imports inactive with durable conflict checks, interruption/replay recovery, readback proofs, resumable abort, and explicit operator-attested activation.
+- Require Vault sudo for custody administration; ordinary key/status/signing tokens cannot export or activate a staged set. Keep unrelated keys, KV secrets, auth state, and other mounts outside transfer.
+- Add local Vault ACL, reload, staging and activation acceptance plus storage-failure and race coverage.
+- Correct embedded release metadata. The v2.1.0 tag's artifact publication failed because it retained v2.0.1 metadata; that tag is preserved and no v2.1.0 GitHub release artifact was published.
+
 ## v2.0.1 - 2026-10-29
 
 - Correct the Go module path to `github.com/lazysteff/csign/v2` and migrate all internal imports and Go consumer examples.

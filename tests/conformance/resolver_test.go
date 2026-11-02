@@ -4,8 +4,8 @@ import (
 	"context"
 	"errors"
 
-	"github.com/lazysteff/csign/v2/internal/custody"
-	"github.com/lazysteff/csign/v2/internal/domain"
+	"github.com/arctex-one/csign/v2/internal/custody"
+	"github.com/arctex-one/csign/v2/internal/domain"
 )
 
 type staticResolver struct {

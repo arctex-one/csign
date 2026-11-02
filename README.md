@@ -91,7 +91,7 @@ Hierarchical slash-delimited `key_id` values are supported end-to-end. A valid `
 
 ### Prerequisites
 
-- Go 1.27.0 or newer
+- Go 1.27.1 or newer
 - `make`
 - A Vault deployment with external plugin support if you want to run the plugin end-to-end
 
@@ -116,7 +116,7 @@ This first runs `make verify`. If tests or golangci-lint fail, no release artifa
 ### Publish a release
 
 ```bash
-VERSION=v2.1.2 make publish-release
+VERSION=v2.1.3 make publish-release
 ```
 
 This is the supported release path. It requires a clean `main` worktree, verifies the changelog entry, runs the gated artifact build, creates and pushes the annotated tag, and lets the GitHub Actions release workflow publish the GitHub release. Before publishing, the workflow resolves the exact tagged module through `proxy.golang.org` into a temporary consumer outside the checkout with a fresh module cache, workspace disabled, and no replacement directives. It builds both the public Go client and the Vault plugin, then runs the same repository verification gate again before uploading release assets. A failure prevents GitHub release publication; the pushed tag is retained and must never be moved.
@@ -126,7 +126,7 @@ The requested `VERSION` must match `internal/version/version.go`; mismatches are
 To repeat the external-consumer check for an already pushed stable tag:
 
 ```bash
-VERSION=v2.1.2 make module-release-check
+VERSION=v2.1.3 make module-release-check
 ```
 
 This check needs network access and does not use local source replacements. Repository-local builds alone do not verify Go module packaging.
@@ -339,31 +339,31 @@ The new routes are forward-only. There is no migration, alias route, compatibili
 
 ## Use from Go
 
-The repository ships with a small Vault client package at `github.com/lazysteff/csign/v2/pkg/client`.
+The repository ships with a small Vault client package at `github.com/arctex-one/csign/v2/pkg/client`.
 The client is organized by capability through `Keys`, `Signing`, and `Payloads`.
 
 Install a stable v2 release in your consumer module:
 
 ```bash
-go get github.com/lazysteff/csign/v2@v2.1.2
-go build github.com/lazysteff/csign/v2/cmd/chain-signer-plugin
+go get github.com/arctex-one/csign/v2@v2.1.3
+go build github.com/arctex-one/csign/v2/cmd/chain-signer-plugin
 ```
 
 For version discovery, query the v2 module path:
 
 ```bash
-go list -m -versions github.com/lazysteff/csign/v2
-go list -m -json github.com/lazysteff/csign/v2@latest
+go list -m -versions github.com/arctex-one/csign/v2
+go list -m -json github.com/arctex-one/csign/v2@latest
 ```
 
-The unsuffixed `github.com/lazysteff/csign@latest` endpoint remains on v1 by Go's major-version rules. The original v2.0.0 tag has an invalid v2 module declaration and cannot be used as a Go module, including with `+incompatible`; use v2.0.1 or later. Existing tags are not rewritten.
+Version v2.1.3 is the first release declaring the `github.com/arctex-one/csign/v2` module path. Earlier v2 releases retain their original module declarations; existing tags are not rewritten. The original v2.0.0 tag has an invalid v2 module declaration and cannot be used as a Go module, including with `+incompatible`.
 
-When migrating, rewrite imports from `github.com/chain-signer/chain-signer/...` (or the unsuffixed repository path) to `github.com/lazysteff/csign/v2/...`, remove the old module requirement and any replacement that maps the old path to this repository, then run `go mod tidy`. Replacing the old module path with v2 is not a substitute for migrating imports: v2's internal imports use the canonical v2 path. The Go module major version does not change the HTTP API version or the `pkg/api/v1` package suffix.
+When migrating, rewrite imports from `github.com/lazysteff/csign/v2/...`, `github.com/chain-signer/chain-signer/...`, or the unsuffixed repository path to `github.com/arctex-one/csign/v2/...`, remove the old module requirement and any replacement that maps the old path to this repository, then run `go mod tidy`. Replacing the old module path with v2 is not a substitute for migrating imports: v2's internal imports use the canonical v2 path. The Go module major version does not change the HTTP API version or the `pkg/api/v1` package suffix.
 
 For local development only, a consumer that already imports the canonical v2 path can use:
 
 ```go
-replace github.com/lazysteff/csign/v2 => ../csign
+replace github.com/arctex-one/csign/v2 => ../csign
 ```
 
 Remove this replacement to validate a published release.
@@ -378,8 +378,8 @@ import (
 	"log"
 	"os"
 
-	v1 "github.com/lazysteff/csign/v2/pkg/api/v1"
-	csclient "github.com/lazysteff/csign/v2/pkg/client"
+	v1 "github.com/arctex-one/csign/v2/pkg/api/v1"
+	csclient "github.com/arctex-one/csign/v2/pkg/client"
 	"github.com/hashicorp/vault/api"
 )
 

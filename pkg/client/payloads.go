@@ -3,8 +3,8 @@ package client
 import (
 	"context"
 
-	"github.com/lazysteff/csign/v2/internal/routes"
-	v1 "github.com/lazysteff/csign/v2/pkg/api/v1"
+	"github.com/arctex-one/csign/v2/internal/routes"
+	v1 "github.com/arctex-one/csign/v2/pkg/api/v1"
 )
 
 func (c *PayloadsClient) Verify(ctx context.Context, req v1.VerifyRequest) (*v1.RecoverResponse, error) {

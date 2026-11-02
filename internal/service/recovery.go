@@ -1,9 +1,9 @@
 package service
 
 import (
-	"github.com/lazysteff/csign/v2/internal/chain"
-	"github.com/lazysteff/csign/v2/internal/faults"
-	v1 "github.com/lazysteff/csign/v2/pkg/api/v1"
+	"github.com/arctex-one/csign/v2/internal/chain"
+	"github.com/arctex-one/csign/v2/internal/faults"
+	v1 "github.com/arctex-one/csign/v2/pkg/api/v1"
 )
 
 type RecoveryService struct{}

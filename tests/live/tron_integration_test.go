@@ -13,8 +13,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/lazysteff/csign/v2/internal/vaultbackend"
-	v1 "github.com/lazysteff/csign/v2/pkg/api/v1"
+	"github.com/arctex-one/csign/v2/internal/vaultbackend"
+	v1 "github.com/arctex-one/csign/v2/pkg/api/v1"
 	tronclient "github.com/fbsobreira/gotron-sdk/pkg/client"
 	"github.com/fbsobreira/gotron-sdk/pkg/proto/core"
 	"github.com/hashicorp/vault/sdk/logical"

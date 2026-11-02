@@ -5,9 +5,9 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/lazysteff/csign/v2/internal/custody"
-	"github.com/lazysteff/csign/v2/internal/domain"
-	v1 "github.com/lazysteff/csign/v2/pkg/api/v1"
+	"github.com/arctex-one/csign/v2/internal/custody"
+	"github.com/arctex-one/csign/v2/internal/domain"
+	v1 "github.com/arctex-one/csign/v2/pkg/api/v1"
 	"github.com/stretchr/testify/require"
 )
 

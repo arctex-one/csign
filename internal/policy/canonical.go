@@ -5,8 +5,8 @@ import (
 	"maps"
 	"strings"
 
-	"github.com/lazysteff/csign/v2/internal/chain"
-	enc "github.com/lazysteff/csign/v2/internal/encoding"
+	"github.com/arctex-one/csign/v2/internal/chain"
+	enc "github.com/arctex-one/csign/v2/internal/encoding"
 )
 
 func equalStringSets(field string, left, right []string, normalize func(string) (string, error)) (bool, error) {

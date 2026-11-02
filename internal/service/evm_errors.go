@@ -4,9 +4,9 @@ import (
 	"errors"
 	"strings"
 
-	"github.com/lazysteff/csign/v2/internal/chain/evm/advancedregistry"
-	"github.com/lazysteff/csign/v2/internal/faults"
-	"github.com/lazysteff/csign/v2/internal/routes"
+	"github.com/arctex-one/csign/v2/internal/chain/evm/advancedregistry"
+	"github.com/arctex-one/csign/v2/internal/faults"
+	"github.com/arctex-one/csign/v2/internal/routes"
 	ethtypes "github.com/ethereum/go-ethereum/core/types"
 )
 

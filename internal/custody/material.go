@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/lazysteff/csign/v2/internal/domain"
+	"github.com/arctex-one/csign/v2/internal/domain"
 	ethcrypto "github.com/ethereum/go-ethereum/crypto"
 )
 

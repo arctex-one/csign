@@ -5,9 +5,9 @@ package solana
 import (
 	"fmt"
 
-	"github.com/lazysteff/csign/v2/internal/cryptography"
-	enc "github.com/lazysteff/csign/v2/internal/encoding"
-	v1 "github.com/lazysteff/csign/v2/pkg/api/v1"
+	"github.com/arctex-one/csign/v2/internal/cryptography"
+	enc "github.com/arctex-one/csign/v2/internal/encoding"
+	v1 "github.com/arctex-one/csign/v2/pkg/api/v1"
 	"github.com/shengdoushi/base58"
 )
 

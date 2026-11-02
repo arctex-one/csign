@@ -4,11 +4,11 @@ import (
 	"crypto/ecdsa"
 	"strings"
 
-	"github.com/lazysteff/csign/v2/internal/chain/evm/advancedcodec"
-	"github.com/lazysteff/csign/v2/internal/chain/evm/eip712"
-	"github.com/lazysteff/csign/v2/internal/cryptography"
-	enc "github.com/lazysteff/csign/v2/internal/encoding"
-	v1 "github.com/lazysteff/csign/v2/pkg/api/v1"
+	"github.com/arctex-one/csign/v2/internal/chain/evm/advancedcodec"
+	"github.com/arctex-one/csign/v2/internal/chain/evm/eip712"
+	"github.com/arctex-one/csign/v2/internal/cryptography"
+	enc "github.com/arctex-one/csign/v2/internal/encoding"
+	v1 "github.com/arctex-one/csign/v2/pkg/api/v1"
 )
 
 func PrepareEIP712(pub *ecdsa.PublicKey, req *v1.EVMEIP712SignRequest) (*cryptography.Prepared, error) {

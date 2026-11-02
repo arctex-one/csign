@@ -5,15 +5,15 @@ import (
 	"maps"
 	"time"
 
-	"github.com/lazysteff/csign/v2/internal/chain"
-	"github.com/lazysteff/csign/v2/internal/custody"
-	"github.com/lazysteff/csign/v2/internal/domain"
-	"github.com/lazysteff/csign/v2/internal/faults"
-	"github.com/lazysteff/csign/v2/internal/keyid"
-	"github.com/lazysteff/csign/v2/internal/policy"
-	"github.com/lazysteff/csign/v2/internal/repository"
-	"github.com/lazysteff/csign/v2/internal/signingops"
-	v1 "github.com/lazysteff/csign/v2/pkg/api/v1"
+	"github.com/arctex-one/csign/v2/internal/chain"
+	"github.com/arctex-one/csign/v2/internal/custody"
+	"github.com/arctex-one/csign/v2/internal/domain"
+	"github.com/arctex-one/csign/v2/internal/faults"
+	"github.com/arctex-one/csign/v2/internal/keyid"
+	"github.com/arctex-one/csign/v2/internal/policy"
+	"github.com/arctex-one/csign/v2/internal/repository"
+	"github.com/arctex-one/csign/v2/internal/signingops"
+	v1 "github.com/arctex-one/csign/v2/pkg/api/v1"
 )
 
 type KeyService struct {

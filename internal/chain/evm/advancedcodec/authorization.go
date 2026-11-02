@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"math"
 
-	"github.com/lazysteff/csign/v2/internal/chain/evm/advancedregistry"
-	v1 "github.com/lazysteff/csign/v2/pkg/api/v1"
+	"github.com/arctex-one/csign/v2/internal/chain/evm/advancedregistry"
+	v1 "github.com/arctex-one/csign/v2/pkg/api/v1"
 	"github.com/ethereum/go-ethereum/common"
 	ethtypes "github.com/ethereum/go-ethereum/core/types"
 	"github.com/holiman/uint256"

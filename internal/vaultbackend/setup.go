@@ -5,13 +5,13 @@ import (
 	"sync"
 	"time"
 
+	"github.com/arctex-one/csign/v2/internal/custody"
+	"github.com/arctex-one/csign/v2/internal/policy"
+	"github.com/arctex-one/csign/v2/internal/repository"
+	"github.com/arctex-one/csign/v2/internal/service"
+	"github.com/arctex-one/csign/v2/internal/signingops"
 	"github.com/hashicorp/vault/sdk/framework"
 	"github.com/hashicorp/vault/sdk/logical"
-	"github.com/lazysteff/csign/v2/internal/custody"
-	"github.com/lazysteff/csign/v2/internal/policy"
-	"github.com/lazysteff/csign/v2/internal/repository"
-	"github.com/lazysteff/csign/v2/internal/service"
-	"github.com/lazysteff/csign/v2/internal/signingops"
 )
 
 type Backend struct {

@@ -12,11 +12,11 @@ import (
 	"slices"
 
 	"filippo.io/age"
-	enc "github.com/lazysteff/csign/v2/internal/encoding"
-	"github.com/lazysteff/csign/v2/internal/faults"
-	"github.com/lazysteff/csign/v2/internal/keyid"
-	"github.com/lazysteff/csign/v2/internal/repository"
-	v1 "github.com/lazysteff/csign/v2/pkg/api/v1"
+	enc "github.com/arctex-one/csign/v2/internal/encoding"
+	"github.com/arctex-one/csign/v2/internal/faults"
+	"github.com/arctex-one/csign/v2/internal/keyid"
+	"github.com/arctex-one/csign/v2/internal/repository"
+	v1 "github.com/arctex-one/csign/v2/pkg/api/v1"
 )
 
 // These protocol limits are fixed, not runtime configuration. Vault separately

@@ -5,7 +5,7 @@ import (
 	"crypto/ecdsa"
 	"fmt"
 
-	enc "github.com/lazysteff/csign/v2/internal/encoding"
+	enc "github.com/arctex-one/csign/v2/internal/encoding"
 	ethcrypto "github.com/ethereum/go-ethereum/crypto"
 )
 

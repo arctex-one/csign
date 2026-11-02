@@ -5,12 +5,12 @@ import (
 	"math/big"
 	"strings"
 
-	"github.com/lazysteff/csign/v2/internal/chain/evm/advancedcodec"
-	"github.com/lazysteff/csign/v2/internal/chain/evm/advancedregistry"
-	"github.com/lazysteff/csign/v2/internal/domain"
-	enc "github.com/lazysteff/csign/v2/internal/encoding"
-	"github.com/lazysteff/csign/v2/internal/faults"
-	v1 "github.com/lazysteff/csign/v2/pkg/api/v1"
+	"github.com/arctex-one/csign/v2/internal/chain/evm/advancedcodec"
+	"github.com/arctex-one/csign/v2/internal/chain/evm/advancedregistry"
+	"github.com/arctex-one/csign/v2/internal/domain"
+	enc "github.com/arctex-one/csign/v2/internal/encoding"
+	"github.com/arctex-one/csign/v2/internal/faults"
+	v1 "github.com/arctex-one/csign/v2/pkg/api/v1"
 )
 
 func ValidateEVMUserOperation(key domain.Key, req *v1.EVMUserOperationSignRequest) error {

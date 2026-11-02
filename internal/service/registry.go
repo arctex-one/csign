@@ -7,16 +7,16 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/lazysteff/csign/v2/internal/chain/evm"
-	"github.com/lazysteff/csign/v2/internal/chain/solana"
-	"github.com/lazysteff/csign/v2/internal/chain/tron"
-	"github.com/lazysteff/csign/v2/internal/cryptography"
-	"github.com/lazysteff/csign/v2/internal/domain"
-	"github.com/lazysteff/csign/v2/internal/faults"
-	"github.com/lazysteff/csign/v2/internal/policy"
-	"github.com/lazysteff/csign/v2/internal/routes"
-	"github.com/lazysteff/csign/v2/internal/signingops"
-	v1 "github.com/lazysteff/csign/v2/pkg/api/v1"
+	"github.com/arctex-one/csign/v2/internal/chain/evm"
+	"github.com/arctex-one/csign/v2/internal/chain/solana"
+	"github.com/arctex-one/csign/v2/internal/chain/tron"
+	"github.com/arctex-one/csign/v2/internal/cryptography"
+	"github.com/arctex-one/csign/v2/internal/domain"
+	"github.com/arctex-one/csign/v2/internal/faults"
+	"github.com/arctex-one/csign/v2/internal/policy"
+	"github.com/arctex-one/csign/v2/internal/routes"
+	"github.com/arctex-one/csign/v2/internal/signingops"
+	v1 "github.com/arctex-one/csign/v2/pkg/api/v1"
 )
 
 type OperationPreparation func(context.Context, cryptography.Capability, cryptography.PublicKey, any) (*cryptography.Prepared, error)

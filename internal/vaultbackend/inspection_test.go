@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/lazysteff/csign/v2/internal/faults"
+	"github.com/arctex-one/csign/v2/internal/faults"
 	"github.com/hashicorp/vault/sdk/logical"
 	"github.com/stretchr/testify/require"
 )

@@ -4,7 +4,7 @@ import (
 	"errors"
 	"reflect"
 
-	"github.com/lazysteff/csign/v2/internal/faults"
+	"github.com/arctex-one/csign/v2/internal/faults"
 )
 
 type keyIDCarrier interface {

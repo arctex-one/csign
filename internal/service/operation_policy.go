@@ -4,10 +4,10 @@ import (
 	"context"
 	"errors"
 
-	"github.com/lazysteff/csign/v2/internal/domain"
-	"github.com/lazysteff/csign/v2/internal/faults"
-	"github.com/lazysteff/csign/v2/internal/repository"
-	v1 "github.com/lazysteff/csign/v2/pkg/api/v1"
+	"github.com/arctex-one/csign/v2/internal/domain"
+	"github.com/arctex-one/csign/v2/internal/faults"
+	"github.com/arctex-one/csign/v2/internal/repository"
+	v1 "github.com/arctex-one/csign/v2/pkg/api/v1"
 )
 
 func (s *SigningService) resolveOperationDescriptor(ctx context.Context, route string) (OperationDescriptor, error) {

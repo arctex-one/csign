@@ -3,8 +3,8 @@ package evm
 import (
 	"context"
 
-	"github.com/lazysteff/csign/v2/internal/custody"
-	v1 "github.com/lazysteff/csign/v2/pkg/api/v1"
+	"github.com/arctex-one/csign/v2/internal/custody"
+	v1 "github.com/arctex-one/csign/v2/pkg/api/v1"
 )
 
 // Direct helpers preserve existing package integrations; Vault requests use

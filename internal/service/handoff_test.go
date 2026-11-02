@@ -11,11 +11,11 @@ import (
 	"time"
 
 	"filippo.io/age"
+	"github.com/arctex-one/csign/v2/internal/faults"
+	"github.com/arctex-one/csign/v2/internal/repository"
+	"github.com/arctex-one/csign/v2/internal/signingops"
+	v1 "github.com/arctex-one/csign/v2/pkg/api/v1"
 	"github.com/hashicorp/vault/sdk/logical"
-	"github.com/lazysteff/csign/v2/internal/faults"
-	"github.com/lazysteff/csign/v2/internal/repository"
-	"github.com/lazysteff/csign/v2/internal/signingops"
-	v1 "github.com/lazysteff/csign/v2/pkg/api/v1"
 	"github.com/stretchr/testify/require"
 )
 

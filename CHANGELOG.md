@@ -1,5 +1,13 @@
 # Changelog
 
+## v2.1.3 - 2026-11-02
+
+- Move the canonical Go module and all source, test, client-example, and release-check imports to `github.com/arctex-one/csign/v2` after the repository transfer to `arctex-one`.
+- Update installation and migration guidance for the new organization. Go consumers must rewrite old imports and require v2.1.3 or later; existing release tags retain their original module declarations.
+- Refresh compatible transitive Go dependencies while preserving the Vault metrics compatibility exclusions. Direct dependencies and GitHub Actions release tooling are already at their latest compatible stable releases.
+
+The HTTP API, signing policies, custody transfer format, and storage schema are unchanged.
+
 ## v2.1.2
 
 - Keep staged Source key material outside the live `keys/` store. Older signers cannot discover or enable staged keys by ignoring import metadata.

@@ -3,8 +3,8 @@ package policy
 import (
 	"strings"
 
-	enc "github.com/lazysteff/csign/v2/internal/encoding"
-	"github.com/lazysteff/csign/v2/internal/faults"
+	enc "github.com/arctex-one/csign/v2/internal/encoding"
+	"github.com/arctex-one/csign/v2/internal/faults"
 )
 
 func enforceBigCap(value, capValue, field string) error {

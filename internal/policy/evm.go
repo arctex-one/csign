@@ -3,11 +3,11 @@ package policy
 import (
 	"strings"
 
-	"github.com/lazysteff/csign/v2/internal/chain"
-	"github.com/lazysteff/csign/v2/internal/domain"
-	enc "github.com/lazysteff/csign/v2/internal/encoding"
-	"github.com/lazysteff/csign/v2/internal/faults"
-	v1 "github.com/lazysteff/csign/v2/pkg/api/v1"
+	"github.com/arctex-one/csign/v2/internal/chain"
+	"github.com/arctex-one/csign/v2/internal/domain"
+	enc "github.com/arctex-one/csign/v2/internal/encoding"
+	"github.com/arctex-one/csign/v2/internal/faults"
+	v1 "github.com/arctex-one/csign/v2/pkg/api/v1"
 )
 
 func ValidateEVMLegacyTransfer(key domain.Key, req *v1.EVMLegacyTransferSignRequest) error {

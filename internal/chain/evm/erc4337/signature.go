@@ -5,7 +5,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/lazysteff/csign/v2/internal/chain/evm/rsv27"
+	"github.com/arctex-one/csign/v2/internal/chain/evm/rsv27"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
 )

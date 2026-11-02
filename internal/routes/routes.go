@@ -1,6 +1,6 @@
 package routes
 
-import "github.com/lazysteff/csign/v2/internal/keyid"
+import "github.com/arctex-one/csign/v2/internal/keyid"
 
 const (
 	SolanaMessageSign = "v1/solana/messages/sign"

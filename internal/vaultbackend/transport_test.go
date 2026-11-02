@@ -5,9 +5,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/lazysteff/csign/v2/internal/domain"
-	"github.com/lazysteff/csign/v2/internal/faults"
-	v1 "github.com/lazysteff/csign/v2/pkg/api/v1"
+	"github.com/arctex-one/csign/v2/internal/domain"
+	"github.com/arctex-one/csign/v2/internal/faults"
+	v1 "github.com/arctex-one/csign/v2/pkg/api/v1"
 	"github.com/hashicorp/vault/sdk/framework"
 	"github.com/hashicorp/vault/sdk/logical"
 	"github.com/stretchr/testify/require"

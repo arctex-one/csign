@@ -6,9 +6,9 @@ import (
 	"crypto/rand"
 	"testing"
 
-	"github.com/lazysteff/csign/v2/internal/custody"
-	enc "github.com/lazysteff/csign/v2/internal/encoding"
-	v1 "github.com/lazysteff/csign/v2/pkg/api/v1"
+	"github.com/arctex-one/csign/v2/internal/custody"
+	enc "github.com/arctex-one/csign/v2/internal/encoding"
+	v1 "github.com/arctex-one/csign/v2/pkg/api/v1"
 	ethcrypto "github.com/ethereum/go-ethereum/crypto"
 	"github.com/stretchr/testify/require"
 )

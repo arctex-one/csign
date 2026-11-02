@@ -5,13 +5,13 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/lazysteff/csign/v2/internal/cryptography"
-	"github.com/lazysteff/csign/v2/internal/custody"
-	"github.com/lazysteff/csign/v2/internal/domain"
-	"github.com/lazysteff/csign/v2/internal/faults"
-	"github.com/lazysteff/csign/v2/internal/policy"
-	"github.com/lazysteff/csign/v2/internal/routes"
-	v1 "github.com/lazysteff/csign/v2/pkg/api/v1"
+	"github.com/arctex-one/csign/v2/internal/cryptography"
+	"github.com/arctex-one/csign/v2/internal/custody"
+	"github.com/arctex-one/csign/v2/internal/domain"
+	"github.com/arctex-one/csign/v2/internal/faults"
+	"github.com/arctex-one/csign/v2/internal/policy"
+	"github.com/arctex-one/csign/v2/internal/routes"
+	v1 "github.com/arctex-one/csign/v2/pkg/api/v1"
 	"github.com/stretchr/testify/require"
 )
 

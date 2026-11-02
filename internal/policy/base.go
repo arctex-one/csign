@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/lazysteff/csign/v2/internal/domain"
-	enc "github.com/lazysteff/csign/v2/internal/encoding"
-	"github.com/lazysteff/csign/v2/internal/faults"
-	v1 "github.com/lazysteff/csign/v2/pkg/api/v1"
+	"github.com/arctex-one/csign/v2/internal/domain"
+	enc "github.com/arctex-one/csign/v2/internal/encoding"
+	"github.com/arctex-one/csign/v2/internal/faults"
+	v1 "github.com/arctex-one/csign/v2/pkg/api/v1"
 )
 
 func validateAdvancedBase(key domain.Key, chainFamily, network, requestID, signerAddress, chainIDValue, operation string, allowZeroChainID bool) error {

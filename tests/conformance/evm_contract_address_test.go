@@ -4,9 +4,9 @@ import (
 	"context"
 	"testing"
 
-	enc "github.com/lazysteff/csign/v2/internal/encoding"
-	"github.com/lazysteff/csign/v2/internal/routes"
-	v1 "github.com/lazysteff/csign/v2/pkg/api/v1"
+	enc "github.com/arctex-one/csign/v2/internal/encoding"
+	"github.com/arctex-one/csign/v2/internal/routes"
+	v1 "github.com/arctex-one/csign/v2/pkg/api/v1"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/hashicorp/vault/sdk/logical"

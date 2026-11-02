@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/lazysteff/csign/v2/internal/signingops"
+	"github.com/arctex-one/csign/v2/internal/signingops"
 )
 
 func validateRouteRegistrations(catalog *signingops.Catalog, registrations []pathRegistration) error {

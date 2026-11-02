@@ -4,11 +4,11 @@ import (
 	"context"
 	"testing"
 
-	"github.com/lazysteff/csign/v2/internal/cryptography"
-	"github.com/lazysteff/csign/v2/internal/domain"
-	"github.com/lazysteff/csign/v2/internal/faults"
-	"github.com/lazysteff/csign/v2/internal/signingops"
-	v1 "github.com/lazysteff/csign/v2/pkg/api/v1"
+	"github.com/arctex-one/csign/v2/internal/cryptography"
+	"github.com/arctex-one/csign/v2/internal/domain"
+	"github.com/arctex-one/csign/v2/internal/faults"
+	"github.com/arctex-one/csign/v2/internal/signingops"
+	v1 "github.com/arctex-one/csign/v2/pkg/api/v1"
 	"github.com/stretchr/testify/require"
 )
 

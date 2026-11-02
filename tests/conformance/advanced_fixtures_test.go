@@ -5,8 +5,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/lazysteff/csign/v2/internal/vaultbackend"
-	v1 "github.com/lazysteff/csign/v2/pkg/api/v1"
+	"github.com/arctex-one/csign/v2/internal/vaultbackend"
+	v1 "github.com/arctex-one/csign/v2/pkg/api/v1"
 	"github.com/hashicorp/vault/sdk/logical"
 	"github.com/stretchr/testify/require"
 )

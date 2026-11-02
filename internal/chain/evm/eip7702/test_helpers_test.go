@@ -8,7 +8,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/lazysteff/csign/v2/internal/custody"
+	"github.com/arctex-one/csign/v2/internal/custody"
 	"github.com/ethereum/go-ethereum/common"
 	ethtypes "github.com/ethereum/go-ethereum/core/types"
 	ethcrypto "github.com/ethereum/go-ethereum/crypto"

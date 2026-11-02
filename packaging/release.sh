@@ -20,8 +20,8 @@ if [[ "$VERSION" != "$EMBEDDED_VERSION" ]]; then
 fi
 
 MODULE="$("$GO" list -m -f '{{.Path}}')"
-if [[ "$MODULE" != "github.com/lazysteff/csign/v2" || ! "$VERSION" =~ ^v2\.[0-9]+\.[0-9]+$ ]]; then
-	echo "stable v2 releases require module github.com/lazysteff/csign/v2 and a v2.x.y version" >&2
+if [[ "$MODULE" != "github.com/arctex-one/csign/v2" || ! "$VERSION" =~ ^v2\.[0-9]+\.[0-9]+$ ]]; then
+	echo "stable v2 releases require module github.com/arctex-one/csign/v2 and a v2.x.y version" >&2
 	exit 1
 fi
 

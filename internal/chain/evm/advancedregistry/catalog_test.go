@@ -3,9 +3,9 @@ package advancedregistry
 import (
 	"testing"
 
-	"github.com/lazysteff/csign/v2/internal/chain/evm/eip712"
-	"github.com/lazysteff/csign/v2/internal/chain/evm/erc4337"
-	v1 "github.com/lazysteff/csign/v2/pkg/api/v1"
+	"github.com/arctex-one/csign/v2/internal/chain/evm/eip712"
+	"github.com/arctex-one/csign/v2/internal/chain/evm/erc4337"
+	v1 "github.com/arctex-one/csign/v2/pkg/api/v1"
 	"github.com/stretchr/testify/require"
 )
 

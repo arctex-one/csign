@@ -7,7 +7,7 @@ if [[ $# -ne 1 || ! "$1" =~ ^v2\.[0-9]+\.[0-9]+$ ]]; then
 fi
 
 GO="${GO:-go}"
-MODULE="github.com/lazysteff/csign/v2"
+MODULE="github.com/arctex-one/csign/v2"
 VERSION="$1"
 WORK_DIR="$(mktemp -d /tmp/csign-module-check.XXXXXXXX)"
 trap '"$GO" clean -modcache; rm -rf "$WORK_DIR"' EXIT
@@ -40,8 +40,8 @@ cat > main.go <<'EOF'
 package main
 
 import (
-	v1 "github.com/lazysteff/csign/v2/pkg/api/v1"
-	"github.com/lazysteff/csign/v2/pkg/client"
+	v1 "github.com/arctex-one/csign/v2/pkg/api/v1"
+	"github.com/arctex-one/csign/v2/pkg/client"
 )
 
 func main() {

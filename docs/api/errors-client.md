@@ -2,6 +2,26 @@
 
 [API index](../API.md)
 
+## Install and import the Go client
+
+The client is published from [arctex-one/csign](https://github.com/arctex-one/csign) as part of the `github.com/arctex-one/csign/v2` module. Install v2.1.3 or later; v2.1.3 is the first release declaring this namespace:
+
+```bash
+go get github.com/arctex-one/csign/v2@v2.1.3
+```
+
+Import the public API contracts and client using the canonical paths:
+
+```go
+import (
+	v1 "github.com/arctex-one/csign/v2/pkg/api/v1"
+	csclient "github.com/arctex-one/csign/v2/pkg/client"
+	"github.com/hashicorp/vault/api"
+)
+```
+
+For existing consumers, follow the [repository and Go module migration guide](../REPOSITORY_MIGRATION.md) to rewrite old imports and remove previous requirements or replacements. The module suffix `/v2` and HTTP API/package version `v1` identify separate contracts.
+
 ## Error behavior
 
 The adapter maps internal failures to Vault HTTP responses like this:

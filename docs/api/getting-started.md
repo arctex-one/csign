@@ -2,6 +2,8 @@
 
 [API index](../API.md)
 
+Source and releases are hosted at [arctex-one/csign](https://github.com/arctex-one/csign). Start with the [build and Vault registration instructions](../../README.md#build), or use the [Go client installation guide](errors-client.md#install-and-import-the-go-client). Existing checkouts and Go consumers should follow the [repository migration guide](../REPOSITORY_MIGRATION.md).
+
 ## Happy path: EVM EIP-1559 transfer
 
 This is the simplest end-to-end flow for a new caller:
@@ -20,13 +22,13 @@ curl \
   "${VAULT_ADDR}/v1/chain-signer/v1/version"
 ```
 
-Abridged example response body (the operation catalog below shows two of the registered entries):
+Abridged v2.1.3 example response body (the route, operation, and protocol catalogs below show selected entries):
 
 ```json
 {
   "data": {
     "api_version": "v1",
-    "build_version": "v1.3.1",
+    "build_version": "v2.1.3",
     "supported_routes": [
       "v1/evm/contracts/eip1559/sign",
       "v1/evm/eip712/sign",

@@ -1,6 +1,8 @@
-# chain-signer HTTP API
+# CSign HTTP API
 
 This document describes the Vault-exposed HTTP API for `chain-signer`, the supported request and response shapes, the policy definition, and a complete happy-path flow.
+
+The canonical repository is [arctex-one/csign](https://github.com/arctex-one/csign), and the Go module is `github.com/arctex-one/csign/v2`. Version v2.1.3 is the first release using that module path. See the [repository migration guide](REPOSITORY_MIGRATION.md) for existing checkouts and consumers. The HTTP API remains `v1`, with the same Vault mount paths.
 
 The reference is organized by responsibility so each page stays focused and readable:
 
@@ -14,7 +16,7 @@ The reference is organized by responsibility so each page stays focused and read
 - [Signing architecture and security model](SIGNING_ARCHITECTURE.md) — typed semantic versus opaque signing and record compatibility.
 - [Verification and recovery](api/verification.md) — generic transaction-payload inspection; structured protocol inspection is documented with each [EVM capability](api/evm.md).
 - [Policy, ACLs, and custody boundaries](api/policy.md) — policy fields, enforcement, Vault ACL examples, and live-chain responsibilities.
-- [Errors and Go client](api/errors-client.md) — HTTP/error-code behavior and typed client methods.
+- [Errors and Go client](api/errors-client.md) — installation, canonical imports, HTTP/error-code behavior, and typed client methods.
 
 ## Endpoint index
 

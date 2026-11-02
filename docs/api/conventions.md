@@ -4,6 +4,8 @@
 
 ## Overview
 
+The source repository is [arctex-one/csign](https://github.com/arctex-one/csign), and Go consumers use `github.com/arctex-one/csign/v2` starting with v2.1.3. The [repository migration guide](../REPOSITORY_MIGRATION.md) covers checkout and import changes. The repository namespace does not change Vault HTTP routes or the API version.
+
 `chain-signer` is mounted in Vault as an external secret plugin. If the plugin is mounted at `chain-signer`, the API base path is:
 
 ```text

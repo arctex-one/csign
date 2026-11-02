@@ -1,6 +1,10 @@
-# chain-signer
+# CSign
 
 `chain-signer` is a HashiCorp Vault external plugin for operation-authorized signing with typed semantic EVM/TRON operations and opaque Solana message signing.
+
+Source: [arctex-one/csign](https://github.com/arctex-one/csign). Releases: [CSign releases](https://github.com/arctex-one/csign/releases). The Go module is `github.com/arctex-one/csign/v2`; the plugin executable remains `chain-signer-plugin` and the examples use the Vault mount `chain-signer`.
+
+For an existing checkout or Go consumer, follow the [repository and Go module migration guide](docs/REPOSITORY_MIGRATION.md).
 
 It is designed for teams that want applications to request signatures through Vault without exposing raw private keys or a generic `sign(hash)` / `sign(bytes)` endpoint. Callers use explicitly registered operations. Typed EVM/TRON operations validate structured protocol fields; the opaque `solana_message` operation signs exact caller-supplied message bytes under its own default-deny authorization. The plugin returns a verified signature or signed transaction artifact.
 
@@ -98,6 +102,8 @@ Hierarchical slash-delimited `key_id` values are supported end-to-end. A valid `
 ### Compile the plugin
 
 ```bash
+git clone https://github.com/arctex-one/csign.git
+cd csign
 make build
 ```
 
@@ -357,6 +363,8 @@ go list -m -json github.com/arctex-one/csign/v2@latest
 ```
 
 Version v2.1.3 is the first release declaring the `github.com/arctex-one/csign/v2` module path. Earlier v2 releases retain their original module declarations; existing tags are not rewritten. The original v2.0.0 tag has an invalid v2 module declaration and cannot be used as a Go module, including with `+incompatible`.
+
+See the [migration guide](docs/REPOSITORY_MIGRATION.md) for updating an existing checkout, removing old module requirements, and verifying the published version, or the [Go client guide](docs/api/errors-client.md#install-and-import-the-go-client) for installation and imports.
 
 When migrating, rewrite imports from `github.com/lazysteff/csign/v2/...`, `github.com/chain-signer/chain-signer/...`, or the unsuffixed repository path to `github.com/arctex-one/csign/v2/...`, remove the old module requirement and any replacement that maps the old path to this repository, then run `go mod tidy`. Replacing the old module path with v2 is not a substitute for migrating imports: v2's internal imports use the canonical v2 path. The Go module major version does not change the HTTP API version or the `pkg/api/v1` package suffix.
 

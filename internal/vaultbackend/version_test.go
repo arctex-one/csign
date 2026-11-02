@@ -19,6 +19,12 @@ func TestHandleVersionIncludesSupportedRoutes(t *testing.T) {
 	require.Equal(t, registeredPublicRoutes(backend.routes), payload.SupportedRoutes)
 	require.Equal(t, backend.registry.OperationCapabilities(), payload.SupportedSigningOperations)
 	require.Equal(t, []string{
+		"v1/custody/abort",
+		"v1/custody/activate",
+		"v1/custody/export",
+		"v1/custody/import",
+		"v1/custody/prepare",
+		"v1/custody/status",
 		"v1/evm/contracts/eip1559/sign",
 		"v1/evm/eip712/sign",
 		"v1/evm/eip712/verify",

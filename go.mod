@@ -3,6 +3,7 @@ module github.com/lazysteff/csign/v2
 go 1.27.1
 
 require (
+	filippo.io/age v1.3.2
 	github.com/ethereum/go-ethereum v1.17.10
 	github.com/fbsobreira/gotron-sdk v0.27.1
 	github.com/hashicorp/go-hclog v1.6.3
@@ -21,6 +22,7 @@ require (
 	cloud.google.com/go/cloudsqlconn v1.25.4 // indirect
 	cloud.google.com/go/compute/metadata v0.10.0 // indirect
 	cloud.google.com/go/sql v0.4.0 // indirect
+	filippo.io/hpke v0.4.0 // indirect
 	github.com/Microsoft/go-winio v0.6.4 // indirect
 	github.com/ProjectZKM/Ziren/crates/go-runtime/zkvm_runtime v0.0.0-20261028124501-05a55ac303ba // indirect
 	github.com/armon/go-metrics v0.4.1 // indirect

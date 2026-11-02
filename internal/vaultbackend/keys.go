@@ -4,16 +4,18 @@ import (
 	"context"
 	"time"
 
+	"github.com/hashicorp/vault/sdk/framework"
+	"github.com/hashicorp/vault/sdk/logical"
 	"github.com/lazysteff/csign/v2/internal/cryptography"
 	"github.com/lazysteff/csign/v2/internal/custody"
 	"github.com/lazysteff/csign/v2/internal/domain"
 	"github.com/lazysteff/csign/v2/internal/faults"
 	v1 "github.com/lazysteff/csign/v2/pkg/api/v1"
-	"github.com/hashicorp/vault/sdk/framework"
-	"github.com/hashicorp/vault/sdk/logical"
 )
 
 func (b *Backend) handleCreateKey(ctx context.Context, req *logical.Request, _ *framework.FieldData) (*logical.Response, error) {
+	b.custodyLock.Lock()
+	defer b.custodyLock.Unlock()
 	var payload v1.CreateKeyRequest
 	if err := decode(req.Data, &payload); err != nil {
 		return nil, mapError(faults.Wrap(faults.Invalid, err))
@@ -26,6 +28,8 @@ func (b *Backend) handleCreateKey(ctx context.Context, req *logical.Request, _ *
 }
 
 func (b *Backend) handleListKeys(ctx context.Context, req *logical.Request, _ *framework.FieldData) (*logical.Response, error) {
+	b.custodyLock.RLock()
+	defer b.custodyLock.RUnlock()
 	ids, err := b.keyService(req.Storage).ListKeyIDs(ctx)
 	if err != nil {
 		return nil, mapError(err)
@@ -34,6 +38,8 @@ func (b *Backend) handleListKeys(ctx context.Context, req *logical.Request, _ *f
 }
 
 func (b *Backend) handleReadKey(ctx context.Context, req *logical.Request, d *framework.FieldData) (*logical.Response, error) {
+	b.custodyLock.RLock()
+	defer b.custodyLock.RUnlock()
 	key, err := b.keyService(req.Storage).Read(ctx, fieldString(d, "key_id"))
 	if err != nil {
 		return nil, mapError(err)
@@ -42,6 +48,8 @@ func (b *Backend) handleReadKey(ctx context.Context, req *logical.Request, d *fr
 }
 
 func (b *Backend) handleUpdateKeyStatus(ctx context.Context, req *logical.Request, d *framework.FieldData) (*logical.Response, error) {
+	b.custodyLock.Lock()
+	defer b.custodyLock.Unlock()
 	var payload v1.UpdateKeyStatusRequest
 	if err := decode(req.Data, &payload); err != nil {
 		return nil, mapError(faults.Wrap(faults.Invalid, err))
@@ -54,6 +62,8 @@ func (b *Backend) handleUpdateKeyStatus(ctx context.Context, req *logical.Reques
 }
 
 func (b *Backend) handleUpdateKeyPolicy(ctx context.Context, req *logical.Request, d *framework.FieldData) (*logical.Response, error) {
+	b.custodyLock.Lock()
+	defer b.custodyLock.Unlock()
 	var payload v1.UpdateKeyPolicyRequest
 	if err := decode(req.Data, &payload); err != nil {
 		return nil, mapError(faults.Wrap(faults.Invalid, err))
